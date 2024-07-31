@@ -1,5 +1,5 @@
 import HomePage from "./pages/homePage/homePage";
-import Layout from "./pages/layout/layout";
+import {Layout, RequireAuth } from "./pages/layout/layout";
 import ListPage from "./pages/listPage/listPage";
 import {
   createBrowserRouter,
@@ -10,6 +10,8 @@ import ProfilePage from "./pages/profilePage/profilePage";
 
 import Login from "./pages/login/login";
 import Register from "./pages/register/register";
+import ProfileUpdatePage from "./pages/profileUpdatePage/profileUpdatePage";
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -29,10 +31,6 @@ function App() {
           element: <SinglePage/>
         },
         {
-          path: "/profile",
-          element: <ProfilePage/>
-        },
-        {
           path:"/login",
           element:<Login/>
         },
@@ -42,11 +40,22 @@ function App() {
         }
       ]
     },
+    {
+      path: "/",
+      element: <RequireAuth />,
+      children: [
+        {
+          path: "/profile",
+          element: <ProfilePage />,
+        },
+        {
+          path: "/profile/update",
+          element: <ProfileUpdatePage />,
+        },
+      ],
+    },
   ]);
-  return (
- 
-    <RouterProvider router={router}/>
-  );
+  return <RouterProvider router={router}/>;
 }
 
 export default App;
